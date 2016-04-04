@@ -9,13 +9,12 @@
 
 "use strict";
 
+var stringHelper = require("");
 var chalk = require("chalk");
 
 class Terminal {
-	
 	getClassName(sender: any) {
 		var className: string = "";
-
 		var constructorString: string = this.constructor.toString();
 		className = constructorString.match(/\w+/g)[1]; 
 
@@ -33,6 +32,22 @@ class Terminal {
 	public echoDebug(outputText: string) {
 		console.log(chalk.bold("%s"), outputText);
 	}
+
+	public echoSetting(setting: string, value: any): void {
+		var settingValue = "";
+		chalk.black.bgWhite.bold(setting);
+		
+		if (!(typeof value === "string")) {
+			settingValue = 
+		} else {
+			
+		}
+		
+		chalk.black.bgWhite.bold(settingValue);
+		
+		console.log(chalk.black.bgWhite(setting), outputText);
+	}
+
 
 	public echoInfo(outputText: string) {
 		console.log(chalk.bold("%s"), outputText);

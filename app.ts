@@ -8,7 +8,7 @@
 
 "use strict";
 
-import { Global } from "./global";
+import { Global, ResourceType } from "./global";
 import { FileSystemHelper } from "./core/filesystem.helper";
 import { ResourceProcessor } from "./core/resource-processor";
 import { Terminal } from "./core/terminal";
@@ -34,7 +34,7 @@ var plumber			= require('gulp-plumber');
 var taskSourceMaps  = require('gulp-sourcemaps');
 var taskScsslint	= require('gulp-scss-lint');
 
-class App {
+class PackmanApp {
 	fileSystemHelper: FileSystemHelper;
 	terminal: Terminal;
 	
@@ -48,14 +48,14 @@ class App {
 	}
 
 	getResourceTypeFromString(resourceName: string) {
-		var resourceType = Global.ResourceType.Unknown;
+		var resourceType = ResourceType.Unknown;
 
 		switch (resourceName.toLowerCase()) {
 			case Global.RESOURCE_NAME_STYLESHEET:
-				resourceType = Global.ResourceType.Style
+				resourceType = ResourceType.Style
 				break;
 			case Global.RESOURCE_NAME_SCRIPT:
-				resourceType = Global.ResourceType.Script
+				resourceType = ResourceType.Script
 				break;
 		}
 		
@@ -241,5 +241,5 @@ class App {
 	}
 }
 
-var core = new Core();
-core.execute();
+var packman = new PackmanApp();
+packman.execute();

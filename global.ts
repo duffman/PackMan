@@ -16,13 +16,11 @@ enum WalkOperationEvent {
 	Errors
 }
 
-
 enum ResourceType {
 	Unknown,
 	Style,
 	Script,
 }
-
 
 class Global {
 	static CONFIG_FILE: string		= "packman-config.json";
