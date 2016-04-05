@@ -36,18 +36,11 @@ class Terminal {
 	public echoSetting(setting: string, value: any): void {
 		var settingValue = "";
 		chalk.black.bgWhite.bold(setting);
-		
-		if (!(typeof value === "string")) {
-			settingValue = 
-		} else {
-			
-		}
-		
+				
 		chalk.black.bgWhite.bold(settingValue);
 		
-		console.log(chalk.black.bgWhite(setting), outputText);
+		console.log(chalk.black.bgWhite(setting), value);
 	}
-
 
 	public echoInfo(outputText: string) {
 		console.log(chalk.bold("%s"), outputText);
