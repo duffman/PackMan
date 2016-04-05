@@ -96,7 +96,7 @@ class PackmanApp {
 		var errorLog = [];
 		var terminal = this.terminal;
 		
-		var configData = jsonfile.readFileSync("main.config.json");
+		var configData = jsonfile.readFileSync("resource.main.config.json");
 		var rootDir = configData.root;
 
 		this.validateConfigValues(configData);
@@ -138,9 +138,9 @@ class PackmanApp {
 				continue;
 			}
 
-			terminal.echoWarning("Bundle Root", bundleRoot);
-			terminal.echoWarning("Bundle Name", bundle.name);
-			terminal.echoWarning("Bundle Filename", bundleFilename);
+			terminal.echoWarning("Bundle Root: "+ bundleRoot);
+			terminal.echoWarning("Bundle Name: " +  bundle.name);
+			terminal.echoWarning("Bundle Filename: " +  bundleFilename);
 
 			this.readOptions(bundle);
 

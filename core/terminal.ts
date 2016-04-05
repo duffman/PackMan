@@ -9,7 +9,7 @@
 
 "use strict";
 
-var stringHelper = require("");
+var stringHelper = require("../utilities/string.helper");
 var chalk = require("chalk");
 
 class Terminal {

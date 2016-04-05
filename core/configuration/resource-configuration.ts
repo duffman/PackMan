@@ -27,7 +27,7 @@ class ResourceConfiguration {
 				
 		if (MiscHelper.isNullOrEmpty(filename)) {
 			this.configurationFilename = this.defaultConfigFilename();
-			this.terminal.echoInfo("Using default configuration filename:", this.configurationFilename);
+			this.terminal.echoInfo("Using default configuration filename: " +  this.configurationFilename);
 		}
 
 		if (!FileSystemHelper.fileExists(this.configurationFilename)) {
@@ -54,7 +54,7 @@ class ResourceConfiguration {
 	
 	public init() {
 		if (Global.Debug) {
-			this.terminal.echoDebug("Initializing resource configuration using ", this.configurationFilename);
+			this.terminal.echoDebug("Initializing resource configuration using: " +  this.configurationFilename);
 		}
 		
 		var configJson = jsonfile.readFileSync(this.configurationFilename);
@@ -90,4 +90,4 @@ class ResourceConfiguration {
 	}
 }
 
-export { Configuration }
+export { ResourceConfiguration }
