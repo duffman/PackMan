@@ -1,0 +1,46 @@
+﻿ul.modules li.mybingo section.box 
+{
+    height:277px;
+    overflow:hidden;
+    background:#A17EC7;
+}
+
+html.mozilla ul.modules li.mybingo section.box 
+{
+    background:-moz-linear-gradient(center top , #A17EC7 0pt, #7445A5 80%) repeat scroll 0 0 transparent;
+}
+
+html.webkit ul.modules li.mybingo section.box 
+{
+   background: -webkit-gradient(linear, left top, left bottom, from(0%,#A17EC7), to(80%,#7445A5));
+}
+
+ul.modules li.mybingo div.container
+{
+    border:5px solid #7445A5;
+    height:87%;
+}
+
+ul.modules li.mybingo a.registeralias
+{
+    font-size:2.5em;
+    font-weight:bold;
+    line-height:1em;
+    padding:2.5em 0;
+    text-align:center;
+    display:block;
+    color:#fff;
+    font-family:NeutraBold, Arial, Verdana, san-serif
+}
+
+ul.modules li.mybingo dd
+{
+    font-weight: bold;
+    font-size: 1.3em;
+    color:#fff;
+    margin:1em;
+}
+ul.modules li.mybingo dd span
+{
+    font-weight: normal;
+}

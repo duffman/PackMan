@@ -1,0 +1,40 @@
+﻿ul.modules li.bingogamelauncher
+{
+    -moz-border-radius:4px;  
+    background:-moz-linear-gradient(top, #A17EC7 0%, #613C89 100%);  
+}
+
+ul.modules li.bingogamelauncher div.container
+{
+    padding:2em;    
+}
+
+ul.modules li.bingogamelauncher h2
+{
+    font-size:2em;
+    text-transform:uppercase;
+    font-weight:bold;
+    line-height:1em;
+    margin: 0 0 0.5em 0;
+    font-family:NeutraBold, Arial, Verdana, san-serif;
+}
+
+ul.modules li.bingogamelauncher nav ul li
+{
+    float:left;
+    padding:0 0.5em;   
+    font-size:1.3em;
+    text-transform:uppercase; 
+    font-weight:bold;
+    line-height:1em;
+    font-family:NeutraBold, Arial, Verdana, san-serif;
+}
+
+ul.modules li.bingogamelauncher nav ul li:first-child
+{
+    padding-left:0;    
+}
+ul.modules li.bingogamelauncher nav ul li:last-child
+{
+    padding-right:0;    
+}

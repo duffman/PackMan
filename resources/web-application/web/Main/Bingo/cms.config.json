@@ -1,0 +1,51 @@
+{
+	"verbose": true,
+	"root": "",
+	"followSymLinks": false,
+	"exclude": [
+		"node_modules"
+	],
+	"sections": [
+		{
+			"type": "style",
+			"options": {
+				"lintFeedback": true,
+				"minify": true
+			},
+			"bundles": [
+				{
+					"name": "prepack_brandbase",
+					"root": "style",
+					"bundlePath": "style/compiled",
+					"bundleFilename": "prepack_brandbase.css",
+					"options": {},
+					"parts": [
+						{ "src": "Content.css" },
+                        { "src": "Sidebar.css" },
+                        { "src": "Footer.css" }
+					]
+				},
+                {
+					"name": "prepack_brandmodules",
+					"root": "style/modules",
+					"bundlePath": "style/compiled",
+					"bundleFilename": "prepack_brandmodules.css",
+					"options": {},
+					"parts": [
+						{ "src": "jackpotpromo.css" },
+						{ "src": "latestwinners.css" },
+                        { "src": "pagemenu.css" },
+                        { "src": "article.css" },
+                        { "src": "mybingo.css" },
+                        { "src": "bingogamelauncher.css" },
+                        { "src": "playbingo.css" },
+                        { "src": "bingoinformation.css" },
+                        { "src": "contactus.css" },
+                        { "src": "jackpotlist.css" },
+                        { "src": "mainpromo.css" }
+					]
+				}
+			]
+		}
+	]
+}

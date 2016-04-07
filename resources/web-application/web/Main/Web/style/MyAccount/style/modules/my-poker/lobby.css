@@ -1,0 +1,171 @@
+﻿ul.modules li.my-poker
+{
+    width: 145%;
+}
+
+ul.modules li.my-poker section.box
+{
+    margin-bottom:1em;
+}
+
+ul.ui-widget-header 
+{
+    background: #000;
+    border: none;
+    color: #FFF;
+    border-radius: 0;
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-bottom: 1px solid #4a4a4a;
+}
+
+ul.ui-widget-header li.ui-state-default {
+    background: none;
+    border: none;
+}
+
+ul.ui-widget-header li.ui-state-default a {
+    color: #4a4a4a;
+}
+
+ul.ui-widget-header li.ui-state-active a {
+    color: #FFF;
+}
+
+ul.ui-widget-header li.ui-state-hover {
+}
+
+ul.ui-widget-header li.ui-tabs-selected 
+{
+    padding-bottom: 0;   
+}
+
+div.ui-widget-content 
+{
+    background: #000;
+    border: none;
+    color: #FFF;
+}
+
+div.ui-widget-content table
+{
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 50%;
+}
+
+div.ui-widget-content div.mypokerdetails .nextlimitreset {
+    margin-top: 10px;
+    padding-left: 5px;
+}
+
+div.ui-widget-content div.mypokerdetails td
+{
+    padding: 1em;
+    margin: 0;
+    border: 1px solid #4d4d4d;
+}
+
+div.ui-widget-content div.mypokerdetails td.label
+{
+    font-weight: normal;
+}
+
+div.ui-widget-content div.mypokerdetails td.value
+{
+    font-weight: bold;
+}
+
+div.ui-widget-content h3
+{
+    font-size: 1.1em;
+    padding: 0.5em;
+    font-weight: bold;
+    margin-top: 1em;
+    color: #21800d;
+}
+
+div.ui-widget-content div.mypokerdetails
+{
+    background: none;
+    background-color: #000;
+    border: none;
+    color: #FFF;
+    padding: 0.5em;
+    margin: 0;
+}
+
+div.ui-widget-content div.mypokerpromotions
+{
+    background-image: none;
+    background-color: #303030;
+    position: relative;
+    display:table;
+    width:100%;
+    padding: 0.5em;
+    margin: 0.5em;
+}
+
+div.ui-widget-content div.mypokerpromotions h3
+{
+    color: #FFF;
+    margin-bottom: 1em;
+    padding: 0;
+    line-height: 1.2em;
+}
+
+div.ui-widget-content div.mypokerpromotions p
+{
+    color: #b9b9b9;
+}
+
+div.ui-widget-content div.mypokerpromotions .button
+{
+    margin: 2em;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 6em;
+    white-space: nowrap;
+}
+
+div.ui-widget-content div.mypokerpromotions section.mypokerpromotion {
+    width:45%;
+    height:18em;
+    float:left;
+    background-color: #212121;
+    margin:1em;
+    position: relative;
+    padding: 0.5em;
+}
+
+div.ui-widget-content div.mypokerpromotions section.mypokerpromotion div.mypokerpromotioncontent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    overflow:hidden;
+    height: 12em;
+}
+
+div.ui-widget-content div.mypokerpromotions section.mypokerpromotion div.mypokerpromotionfooter {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6em;
+}
+
+div.ui-widget-content div.mypokerpromotions section.mypokerpromotion div.mypokerpromotioncontent img.promotionimage {
+    float: left;
+    margin: 2em;
+}
+
+div.ui-widget-content div.mypokerpromotions section.mypokerpromotion div.promotiontext {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 17em;
+    margin: 1em;
+}

@@ -1,0 +1,432 @@
+﻿section.main section.content ul.modules li.accountstatement section.box
+{
+    margin-bottom: 0;
+    font-size: 1.1em;
+}
+
+ul.modules li.accountstatement section.accounts
+{
+    font-weight: bold;
+}
+
+section.main section.content ul.modules li.accountstatement section.box header
+{
+    /*padding: 1em 0 1em 2em;*/
+    margin-bottom: 1em;
+}
+
+    section.main section.content ul.modules li.accountstatement section.box header h2,
+    ul.modules li.accountstatement section.box div.availableinproducts > h2
+    {
+        /*font-size: 1.3em;
+    font-weight: normal;*/
+        display: inline;
+        -webkit-text-shadow: 0 -1px -1px #161718;
+        text-shadow: 0 -1px -1px #161718;
+    }
+
+ul.modules li.accountstatement a.tooltipinfo
+{
+    display: inline-block;
+    vertical-align: middle;
+}
+
+ul.modules li.accountstatement input.showDetailsButton
+{
+    font-weight: normal;
+    font-size: 0.8em;
+    padding: 0.1em 0.8em;
+}
+
+ul.modules li.accountstatement table.accounttable input.showDetailsButton
+{
+    margin-top: 1em;
+}
+
+/* ---------------------------------- */
+/* --------- YOUR ACCOUNTS ---------- */
+/* --------------------------------- */
+
+
+/* --------- BLOCKED USER AREA ---------- */
+ul.modules li.accountstatement section.blockedUserArea
+{
+    background-color: #000;
+    border: 1px solid #399917;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+ul.modules li.accountstatement section.blockedUserArea h2
+{
+    padding-bottom: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+/* --------------------------------- */
+
+/* ------- Overview Table ---------- */
+ul.modules li.accountstatement #accountsOverviewDiv .nextlimitreset {
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+ul.modules li.accountstatement .accountsOverviewTable td
+{
+    border-right: 1px solid #505050;
+}
+
+ul.modules li.accountstatement .accountsOverviewTable tr
+{
+    border-bottom: 1px solid #505050;
+}
+
+    ul.modules li.accountstatement .accountsOverviewTable td:last-child,
+    ul.modules li.accountstatement .accountsOverviewTable tr:first-child,
+    ul.modules li.accountstatement .accountsOverviewTable tr:last-child
+    {
+        border: none;
+    }
+
+ul.modules li.accountstatement .accountsOverviewTable td,
+ul.modules li.accountstatement .accountsOverviewTable th
+{
+    padding: 1em 1.5em;
+}
+
+ul.modules li.accountstatement div.accountbox
+{
+    overflow: hidden;
+    -moz-border-radius-topleft: 3px;
+    -webkit-border-top-left-radius: 3px;
+    border-top-left-radius: 3px;
+    -moz-border-radius-topright: 3px;
+    -webkit-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+ul.modules li.accountstatement div.productHeader
+{
+    overflow: hidden;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+ul.modules li.accountstatement div.accounttableouter
+{
+    overflow: hidden;
+    -webkit-border-top-right-radius: 3px;
+    border-top-right-radius: 3px;
+    -webkit-border-bottom-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    position: relative;
+}
+
+    ul.modules li.accountstatement div.accounttableouter.mainaccount,
+    ul.modules li.accountstatement div.availableinproducts
+    {
+        margin-left: 1em;
+        margin-right: 1em;
+    }
+
+ul.modules li.accountstatement div.availableinproducts
+{
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-top: 3em;
+    padding-bottom: 2em;
+    margin-bottom: 1em;
+    background: #393939;
+}
+.availableinproducts .lobbyheader,
+ul.modules li.accountstatement .accountsOverviewTable tbody tr:first-child,
+ul.modules li.accountstatement #accountTransferForm div.header,
+ul.modules li.accountstatement div.productHeader
+{
+    background: #f3f3f3; /* Old browsers */
+    background: -moz-linear-gradient(top, #f3f3f3 0%, #e3e3e3 50%, #d5d5d5 51%, #dbdbdb 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f3f3f3), color-stop(50%,#e3e3e3), color-stop(51%,#d5d5d5), color-stop(100%,#dbdbdb)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, #f3f3f3 0%,#e3e3e3 50%,#d5d5d5 51%,#dbdbdb 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, #f3f3f3 0%,#e3e3e3 50%,#d5d5d5 51%,#dbdbdb 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, #f3f3f3 0%,#e3e3e3 50%,#d5d5d5 51%,#dbdbdb 100%); /* IE10+ */
+    background: linear-gradient(to bottom, #f3f3f3 0%,#e3e3e3 50%,#d5d5d5 51%,#dbdbdb 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#dbdbdb',GradientType=0 ); /* IE6-9 */
+    color: #272727;
+}
+
+ul.modules li.accountstatement .accountsOverviewTable tbody tr:first-child,
+ul.modules li.accountstatement #accountTransferForm div.header,
+ul.modules li.accountstatement table.accounttable tr.headerrow,
+ul.modules li.accountstatement div.productHeader
+{
+    -webkit-text-shadow: 1px 1px 1px white;
+    text-shadow: 1px 1px 1px white;
+}
+.availableinproducts .lobbyheader span.amount {
+    float: right;   
+}
+.availableinproducts .lobbyheader {
+    padding: 10px 10px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+.availableinproducts .items {
+    display: none;
+}
+ul.modules li.accountstatement table.accounttable th.accountName
+{
+    color: white;
+    -webkit-text-shadow: 0 -1px 0 #3A3A3A;
+    text-shadow: 0 -1px 0 #3A3A3A;
+    font-size: 12px;
+}
+
+ul.modules li.accountstatement #accountTransferForm div.header,
+ul.modules li.accountstatement .accountsOverviewTable tbody th
+{
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+}
+
+ul.modules li.accountstatement #yourAccountsDiv
+{
+    position: relative;
+    width: 100%;
+    background-color: #EEFAFF;
+    border: 1px solid #DEDEDE;
+    height: 23.3em;
+    margin-top: 1.5em;
+}
+
+ul.modules li.accountstatement div.leftDiv,
+ul.modules li.accountstatement div.rightDiv
+{
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    width: 47%;
+    vertical-align: top;
+    background-color: #373737;
+    margin-bottom: 2em;
+}
+
+ul.modules li.accountstatement div.leftDiv
+{
+    margin-left: 2%;
+}
+
+ul.modules li.accountstatement div.rightDiv
+{
+    margin-left: 1%;
+}
+
+/* ------- Overview Table ---------- */
+
+ul.modules li.accountstatement #accountTransferForm
+{
+    float: left;
+    width: 100%;
+    padding-bottom: 1em;
+}
+
+    ul.modules li.accountstatement #accountTransferForm div.header
+    {
+        padding-left: 0.7em;
+    }
+
+    ul.modules li.accountstatement #accountTransferForm label
+    {
+        display: inline-block;
+        width: 12.5em;
+        padding-left: 0.7em;
+        padding-bottom: 0.5em;
+    }
+
+    ul.modules li.accountstatement #accountTransferForm #transferform_error
+    {
+        margin-left: 0.7em;
+        color: red;
+    }
+
+    ul.modules li.accountstatement #accountTransferForm p
+    {
+        margin-top: 0.5em;
+        margin-bottom: 0.5em;
+    }
+
+    ul.modules li.accountstatement #accountTransferForm select
+    {
+        width: 18.1em;
+    }
+
+    ul.modules li.accountstatement #accountTransferForm #transferform_exchange_currency
+    {
+        width: 6em;
+    }
+
+    ul.modules li.accountstatement #accountTransferForm #transferform_amount,
+    ul.modules li.accountstatement #accountTransferForm #transferform_exchange_value
+    {
+        width: 11.5em;
+    }
+
+    ul.modules li.accountstatement #accountTransferForm input,
+    ul.modules li.accountstatement #accountTransferForm select
+    {
+        font-weight: normal;
+    }
+
+        ul.modules li.accountstatement #accountTransferForm input.submitButton
+        {
+            padding: 0.1em 3.1em;
+            margin-right: 2.4em;
+            clear: both;
+        }
+
+        ul.modules li.accountstatement #accountTransferForm input[type=text]
+        {
+            width: 17.7em;
+        }
+
+
+/* ---------------------------------- */
+/* ------- ACCOUNT BALANCE ---------- */
+/* ---------------------------------- */
+
+ul.modules li.accountstatement table.accounttable tr.headerrow
+{
+    color: #565656;
+}
+
+ul.modules li.accountstatement table.accounttable th
+{
+    padding: 0;
+    border-right: 1px solid #A2A2A2;
+    text-align: center;
+}
+
+ul.modules li.accountstatement table.accounttable th,
+ul.modules li.accountstatement table.accounttable td
+{
+    text-align: center;
+}
+
+    ul.modules li.accountstatement table.accounttable th:first-child
+    {
+        padding-left: 1em;
+    }
+
+    ul.modules li.accountstatement table.accounttable th:first-child,
+    ul.modules li.accountstatement table.accounttable td:first-child
+    {
+        max-width: 120px;
+    }
+
+    ul.modules li.accountstatement table.accounttable th.secondchild
+    {
+        padding-left: 15px;
+    }
+
+    ul.modules li.accountstatement table.accounttable th span
+    {
+        display: block;
+    }
+
+    ul.modules li.accountstatement table.accounttable th:first-child span
+    {
+        display: inline;
+    }
+
+ul.modules li.accountstatement table.accounttable td
+{
+    border-right: 1px solid #919191;
+    border-top: 1px solid #383838;
+}
+
+    ul.modules li.accountstatement table.accounttable th:first-child,
+    ul.modules li.accountstatement table.accounttable th:last-child,
+    ul.modules li.accountstatement table.accounttable td:last-child
+    {
+        border-right: none;
+    }
+
+ul.modules li.accountstatement .moneyAmount
+{
+    margin-top: 1em;
+}
+
+ul.modules li.accountstatement table.accounttable span.iconplaceholder
+{
+    top: 21px;
+    position: absolute;
+}
+
+ul.modules li.accountstatement table.accounttable span.plusicon,
+ul.modules li.accountstatement table.accounttable span.equalsicon
+{
+    position: relative;
+    left: -50%;
+}
+
+/* ---------------------------------- */
+/* ------- PRODUCT BALANCE ---------- */
+/* ---------------------------------- */
+
+ul.modules li.accountstatement div.productHeader
+{
+    position: relative;
+    margin-bottom: 1px;
+    padding-bottom: 0.3em;
+    padding-top: 0.3em;
+}
+
+    ul.modules li.accountstatement div.productHeader h2
+    {
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        min-width: 14em;
+        padding-left: 0.6em;
+        font-weight: bold;
+        *line-height: 1.1em;
+    }
+
+ul.modules li.accountstatement div.product
+{
+    margin-top: 0.5em;
+    *position: relative;
+}
+
+.msie ul.modules li.accountstatement table.accounttable tr
+{
+    background-color: #646464;
+}
+
+ul.modules li.accountstatement table.productdetails tr:nth-child(even),
+ul.modules li.accountstatement table.accountdetails tr:nth-child(odd)
+{
+    background-color: #646464;
+}
+
+ul.modules li.accountstatement table.productdetails tr:nth-child(odd),
+ul.modules li.accountstatement table.accountdetails tr:nth-child(even)
+{
+    background-color: #3E3E3E;
+}
+
+ul.modules li.accountstatement table.accounttable tr.headerrow
+{
+    background-color: transparent;
+}
+
+ul.modules li.accountstatement p.sumMoney.rightSection
+{
+    float: right;
+    margin-right: 1em;
+    margin-top: 0.4em;
+    *position: absolute;
+    *right: 0;
+}

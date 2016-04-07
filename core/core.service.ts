@@ -14,7 +14,7 @@ var path        	= require("path");
 var jsonfile    	= require("jsonfile");
 
 import { Global } from "../global";
-import { ResourceProcessor } from "./resource-processor";
+import { ResourceProcessor } from "./resource.processor";
 
 
 class CoreService {

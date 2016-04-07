@@ -1,0 +1,53 @@
+{
+  "verbose": true,
+  "root": "web-application/web",
+  "followSymLinks": false,
+  "exclude": [
+    "node_modules"
+  ],
+  "sections": [
+    {
+      "type": "script",
+      "options": {
+        "lintFeedback": true,
+        "uglify": true
+      },
+      "bundles": [
+        {
+          "name": "js_prepack_modules_accountstatement",
+          "root": "Script/modules",
+          "bundlePath": "script/compiled",
+          "bundleFilename": "prepack_js_modules.js",
+          "options": {},
+          "parts": [
+            { "src": "accountstatement.general.js" },
+            { "src": "transfer.general.js" }
+
+          ]
+        }
+      ]
+    },
+    {
+      "type": "style",
+      "options": {
+        "minify": true,
+        "recursive": false,
+        "lintFeedback": true
+      },
+      "bundles": [
+        {
+          "name": "prepack_brandbase",
+          "root": "Main/Web/style/MyAccount/style",
+          "bundlePath": "style/compiled",
+          "bundleFilename": "prepack_brandbase.css",
+          "options": {},
+          "parts": [
+            { "src": "Header.css" },
+            { "src": "Site.css" },
+            { "src": "Content.css" }
+          ]
+        }
+      ]
+    }
+  ]
+}

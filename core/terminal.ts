@@ -12,6 +12,9 @@
 var stringHelper = require("../utilities/string.helper");
 var chalk = require("chalk");
 
+/**
+ * TODO: Do some serious method cleanup...
+ */
 class Terminal {
 	getClassName(sender: any) {
 		var className: string = "";
@@ -21,9 +24,24 @@ class Terminal {
 		return className;
 	}
 
-	public echo(outputText: string, sender?: any) {
-		console.log(sender, outputText);
+	public log(prefix: string, outputText: string, sender?: any) {
+		console.log(prefix + ": " + outputText);
 	}
+
+	public echoStatus(prefix: string, statusText: string) {
+		console.log(chalk.white.bold(prefix), chalk.green(statusText));
+	}
+	
+	
+	public echo(outputText: string) {
+		console.log(chalk.white(outputText));
+	}
+
+/*
+	public richEcho(...dataArray: any[]) {
+		var outputText = dataArray.join(" ");
+		console.log(outputText);
+	}*/
 
 	public echoPurple(outputText: string, sender?: any) {
 		console.log(chalk.white.bgMagenta.bold("%s"), outputText);
@@ -33,13 +51,8 @@ class Terminal {
 		console.log(chalk.bold("%s"), outputText);
 	}
 
-	public echoSetting(setting: string, value: any): void {
-		var settingValue = "";
-		chalk.black.bgWhite.bold(setting);
-				
-		chalk.black.bgWhite.bold(settingValue);
-		
-		console.log(chalk.black.bgWhite(setting), value);
+	public echoSetting(setting: string, value: string): void {
+		console.log(chalk.black.bgWhite(setting + " " + value));
 	}
 
 	public echoInfo(outputText: string) {

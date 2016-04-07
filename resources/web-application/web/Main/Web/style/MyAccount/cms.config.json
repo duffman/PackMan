@@ -1,0 +1,89 @@
+﻿{
+  "verbose": true,
+  "root": "",
+  "followSymLinks": false,
+  "exclude": [
+    "node_modules"
+  ],
+  "sections": [
+    {
+      "type": "script",
+      "options": {
+        "lintFeedback": true,
+        "uglify": true
+      },
+      "bundles": [
+        {
+          "name": "js_prepack_modules_accountstatement",
+          "root": "Script/modules/accountstatement",
+          "bundlePath": "script/compiled",
+          "bundleFilename": "prepack_modules_accountstatement.js",
+          "options": {},
+          "parts": [
+            { "src": "accountstatement.general.js" }
+          ]
+        },
+        {
+          "name": "js_prepack_modules_transfer",
+          "root": "Script/modules/transfer",
+          "bundlePath": "script/compiled",
+          "bundleFilename": "prepack_modules_transfer.js",
+          "options": {},
+          "parts": [
+            { "src": "transfer.general.js" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "style",
+      "options": {
+        "minify": true,
+        "recursive": false,
+        "lintFeedback": true
+      },
+      "bundles": [
+        {
+          "name": "prepack_brandbase",
+          "root": "style",
+          "bundlePath": "style/compiled",
+          "bundleFilename": "prepack_brandbase.css",
+          "options": {},
+          "parts": [
+            { "src": "Header.css" },
+            { "src": "Site.css" },
+            { "src": "Content.css" }
+          ]
+        },
+        {
+          "name": "prepack_brandmodules",
+          "root": "style/modules",
+          "bundlePath": "style/compiled",
+          "bundleFilename": "prepack_brandmodules.css",
+          "options": {},
+          "parts": [
+            { "src": "common/jquery.datepicker.css" },
+            { "src": "pagemenu.css" },
+            { "src": "mainpromo.css" },
+            { "src": "article.css" },
+            { "src": "my-poker/lobby.css" },
+            { "src": "accountstatement/lobby.css" },
+            { "src": "../web/style/brands/bets10/products/Common/modules/accountarea.css", "absolutePath": true },
+            { "src": "userlimit.css" }
+          ]
+        },
+        {
+          "name": "prepack_brandbaseIE",
+          "root": "../web/style/brands/betsson",
+          "bundlePath": "style/compiled",
+          "bundleFilename": "prepack_brandbaseIE.css",
+          "options": {},
+          "parts": [
+            { "src": "HeaderIE.css" },
+            { "src": "ContentIE.css" }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+﻿ul.modules li.latestwinners section.box section ,
+ul.modules li.latestwinners section.box section a
+{
+    color:#7445A5;
+}
+
+/* Latest winners in content area */
+section.content ul.modules li.latestwinners section.box section 
+{
+    overflow:visible;   
+    height:auto; 
+}
+
+section.content ul.modules li.latestwinners section.box section ul
+{
+    position:relative;  
+    bottom:0;
+    width:auto;   
+    padding:1em;
+}
+section.content ul.modules li.latestwinners section.box section ul li
+{
+    position:relative;    
+    margin: 0 0 2em;
+}
+
+section.content ul.modules li.latestwinners section.box section time
+{
+    display:none;    
+}
+
+section.content ul.modules li.latestwinners section.box section span.name
+{
+    position:absolute;
+    left:2.0em;
+    font-weight:bold;
+    font-size:1.2em;  
+}
+
+section.content ul.modules li.latestwinners section.box section a
+{
+    position:absolute;
+    top:1em; 
+    font-weight:normal;   
+}
+
+section.content ul.modules li.latestwinners section.box section span.amount
+{
+    font-weight:bold;
+    font-size:1.2em;    
+}
+
+section.content ul.modules li.latestwinners section.box section span.flags
+{
+    float:left;    
+}
+section.content ul.modules li.latestwinners section.box section span.latestwinnersicon
+{
+    clear: left;
+    float: left;
+    margin-right:1em;
+    background-size: cover;
+    height: 11px;
+    width: 16px;
+}

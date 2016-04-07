@@ -1,0 +1,64 @@
+﻿ul.modules li.pagemenu nav h2
+{
+}
+
+html.mozilla section#site ul.modules li.pagemenu nav h2
+{
+    background:-moz-linear-gradient(#6C6C6C, #212121 15%) repeat-x center center;
+}
+
+html.webkit section#site ul.modules li.pagemenu nav h2
+{    
+    background:-webkit-gradient(linear, left top, left bottom, from(#6C6C6C), color-stop(15%, #212121), to(#212121));
+}
+
+ul.modules li.pagemenu nav h2 span
+{
+    margin-right:.5em;
+}
+
+/* Header menu gradient */
+ul.modules li.pagemenu nav ul li.header,
+ul.modules li.pagemenu nav ul li.pagemenutop,
+ul.modules li.pagemenu nav ul li.category
+{
+    background-color:#7445A5;
+}
+ul.modules li.pagemenu nav ul li.pagemenubottom
+{
+    color:#5F5F5F;
+    background:#fff;
+}
+ul.modules li.pagemenu nav ul li.pagemenubottom a
+{
+    color:#5F5F5F;
+}
+ul.modules li.pagemenu nav ul li.pagemenubottom:last-child {
+    -moz-border-radius:0 0 3px 3px;
+}
+
+html.mozilla section#site ul.modules li.pagemenu nav ul li.header
+{
+    background:-moz-linear-gradient(top, #8254AF 37%, #7445A5 43%, #7445A5 100%) repeat-x center center;
+}
+
+html.webkit section#site ul.modules li.pagemenu nav ul li.header
+{    
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(37%,#8254AF), color-stop(43%,#7445A5), color-stop(100%,#7445A5));
+}
+/* Header menu gradient end */
+
+ul.modules li.pagemenu nav ul li
+{
+    background-color:#7445A5;
+}
+
+ul.modules li.pagemenu nav ul li.header
+{
+    background-color:#7445A5;
+}
+
+ul.modules li.pagemenu nav ul li.linkmenu a
+{
+    /*color:#5F5F5F;*/ 
+}

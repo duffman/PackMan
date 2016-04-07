@@ -37,22 +37,31 @@ class FileSystemHelper {
 	getStat(source: string): any {
 		var result: any = null;		
 		
-		try {
+		if (fs.existsSync(source)) {
 			result = fs.lstatSync(source);
-		}
-		catch (e) {
-		}
+		}		
 		
 		return result;
 	}
 
-
-	public isFile(fullPath: string): boolean {
-		var stat = this.getStat(fullPath);
-		return true;	
+	public fileExists(source: string): boolean {
+		return this.fileOrDirectoryExists(source, true);
+	}
+		
+	public isFile(source: string) {
+		var status = this.getStat(source);
+		return status != null && status.isFile();
+	}
+	public isDirectory(source: string) {
+		var status = this.getStat(source);
+		return status != null && status.isDirectory();
 	}
 	
-	public static fileOrDirectoryExists(source: string): boolean {
+	public extractFilename(source: string): string {
+		return path.basename(source);
+	}
+	
+	public fileOrDirectoryExists(source: string, isFile?: boolean): boolean {
 		var sourceExists = false;
 		
 		if (fs.existsSync(source)) {

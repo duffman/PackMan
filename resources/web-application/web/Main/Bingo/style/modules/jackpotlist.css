@@ -1,0 +1,23 @@
+﻿ul.modules li.jackpotlist ul.header,
+ul.modules li.jackpotlist section.jackpots
+{
+    background: #fff;
+    color:#000;    
+}
+
+ul.modules li.jackpotlist section.jackpots ul.jackpotitems li
+{
+    color:#7445A5;    
+}
+
+ul.modules li.jackpotlist section.jackpots ul.jackpotitems li a
+{
+    font-weight:bold; 
+    color:#7445A5;    
+    cursor:default; 
+}
+
+ul.modules li.jackpotlist section.box section.jackpotdetails
+{
+    display:none;    
+}

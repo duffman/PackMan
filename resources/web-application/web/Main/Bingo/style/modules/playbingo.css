@@ -1,0 +1,29 @@
+﻿ul.modules li.playbingo nav a
+{
+    -moz-border-radius:3px 3px 3px 3px;
+    display:block;
+    font-weight:bold;
+    padding:8px;
+    text-align:center;
+    cursor:pointer;
+    background-color:#D841AB;
+    box-shadow:inset 0px 0px 5px #FF13F7;   
+}
+
+html.mozilla section#site ul.modules li.playbingo nav a
+{
+    background:-moz-linear-gradient(top, #F98BDE 0%, #D841AB 40%) repeat-x center center;
+    -moz-box-shadow:inset 0px 0px 5px #FF13F7;
+}
+
+html.webkit section#site ul.modules li.playbingo nav a
+{    
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#F98BDE), color-stop(40%,#D841AB));
+    -webkit-box-shadow:inset 0px 0px 5px #FF13F7;
+}
+
+html.opera section#site ul.modules li.playbingo nav a
+{
+    -o-box-shadow:inset 0px 0px 5px #FF13F7;
+}
+

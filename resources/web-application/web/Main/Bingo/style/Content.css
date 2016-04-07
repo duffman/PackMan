@@ -1,0 +1,55 @@
+﻿/* General box design */
+
+section.content ul.modules li section.box
+{
+    background-color:#fff;
+}
+
+section.content ul.modules li section.box header
+{
+    background-color:#7445A5; 
+}
+
+/* General box design end */
+
+/* General button design */
+
+section#site section.main a.button,
+section#site section.main button
+{
+    border-color:#FC9CE3 #F896DF #F776D5 #F896DF;
+    background-color:#F98BDE;
+    text-shadow:0 1px 2px #B5B3AF;
+    color:#fff;
+}
+
+section#site section.main a.button a
+{
+    color:#fff;    
+}
+
+html.opera section#site section.main a.button,
+html.opera section#site section.main button
+{
+    /*background: #F98BDE url(/web/img/common/neutral/gradients/sprite.png) no-repeat top left;*/
+}
+
+html.msie section#site section.main a.button,
+html.msie section#site section.main button
+{
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F98BDE', endColorstr='#D841AB',GradientType=0 );
+}
+
+html.mozilla section#site section.main a.button,
+html.mozilla section#site section.main button
+{
+    background:-moz-linear-gradient(top, #F98BDE 0%, #D841AB 40%) repeat-x center center;
+}
+
+html.webkit section#site section.main a.button,
+html.webkit section#site section.main button
+{    
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F98BDE), color-stop(40%,#D841AB));
+}
+
+/* General button design end */
