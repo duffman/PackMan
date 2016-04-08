@@ -204,10 +204,9 @@ class PackmanApp {
 
 		for (var i = 0; i < bundleCount; i++) {
 			var bundle = bundles[i];
-			var bundleRoot = this.getBundleRootDirectory(bundle);
-			var bundlePath = path.join(this.resourceRootDirectory, bundle.bundlePath);
+			var bundleRoot = this.getBundleRootDirectory(bundle); // NOT USED FOR BUNDLING
+			var destPath = path.join(this.resourceRootDirectory, bundle.bundlePath);
 			var bundleFilename = bundle.bundleFilename;
-			var bundleDestFile = path.join(bundlePath, bundleFilename);
 			var filesInBundle = [];
 			var preservedPartsOrder = [];
 			
@@ -216,25 +215,21 @@ class PackmanApp {
 
 			switch (resourceType) {
 				case Types.ResourceType.Script:
-					this.processScripts(bundleRoot, bundle.parts, filesInBundle, bundleDestFile);
+					this.resourceProcessor.compileScriptBundle(destPath, bundleFilename, filesInBundle, function() {
+						console.log("DONE!!");
+					});
 					break;
 
 				case Types.ResourceType.Style:
-					this.resourceProcessor.compileStyles(bundlePath, filesInBundle);
+					this.resourceProcessor.compileStyles(destPath, filesInBundle);
 					break;
 			}
+			break;
 		}
 	}
 	
-	processScripts(bundlePath: string, bundleParts: string[], filesInBundle: string[], bundleDestFile: string) {
-		this.resourceProcessor.compileScripts(bundlePath, filesInBundle);
-
-//		this.resourceProcessor.bundleScripts()
-
-		this.terminal.echoScreamingError("Compiling is done, time to bundle..." +  bundleDestFile);
-		
-		//this.resourceProcessor.bundleScripts()
-		
+	compileDone() {
+		console.log("COMPILE DONE!!");
 	}
 	
 	useAbsolutePathForPart(part) {
@@ -271,7 +266,7 @@ class PackmanApp {
 				ArrayHelper.arrayMerge(filesInBundle, files);
 			} else {
 				self.terminal.echoScreamingError("\"" + partSource + "\" is missing, terminating...");
-				process.exit(1);
+				if (Global.Settings.terminateOnError) process.exit(1);
 			}
 		});		
 	}

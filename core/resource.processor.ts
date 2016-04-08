@@ -47,30 +47,22 @@ class ResourceProcessor {
 	 * 
 	 * 
 	 ***********************************************************/
-	public compileScripts(outputPath: string, filesInBundle: string[]) {
-		this.terminal.echoArray("Compiling Scripts", filesInBundle);
-		this.terminal.echoInfo("Output Path Path \"" + outputPath + "\"");
-		
-		for (var i = 0; i < filesInBundle.length; i++) {
-			var filename = filesInBundle[i];
-			if (!this.fileSystemHelper.fileExists(filename)) {
-				this.terminal.echoScreamingError("Script file \""
-					+ this.fileSystemHelper.extractFilename(filename) + "\" not found!");
-				if (Global.Settings.terminateOnError) process.exit(1);
-			}
-			
-			this.terminal.echoPrefixedCyan("Compiling Script: ", filename);
-			this.compileScriptsTask(outputPath, filesInBundle);
-		}
-	}	
-	
-	public compileScriptsTask(destPath: string, filesInBundle: string[]) {
-		gulp.src(filesInBundle)
+	public compileScriptBundle(destPath: string, bundleFilename: string,
+		filesInBundle: string[], onCompileDone) {
+
+		var stream = gulp.src(filesInBundle)
 			.pipe(taskUglify())
+			.pipe(taskConcat(bundleFilename))
 			.pipe(gulp.dest(destPath));
+		
+		stream.on('end', function() {
+			onCompileDone();
+			console.log("STREAN END");
+		});
+	
 	}
 
-	//.pipe(taskUglify())
+	/*/.pipe(taskUglify())
 	public bundleScripts(bundleFilename, bundlePath, filesInBundle) {
 		this.terminal.echoStatus("Creating Script Bundle:", bundleFilename);
 		gulp.src(filesInBundle)
@@ -78,8 +70,10 @@ class ResourceProcessor {
 			.pipe(taskConcat(bundleFilename))
 			.pipe(taskSourceMaps.write())
 			.pipe(gulp.dest(bundlePath));
+
+
 	}
-	
+	*/
 	/************************************************************
 	 * 
 	 * 
