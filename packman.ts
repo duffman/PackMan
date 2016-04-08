@@ -1,5 +1,5 @@
 /**
- *	Packman - The Asset Pipe Machine
+ *	Packman - The Asset Machine
  *	@author Patrik Forsberg
  *	@date 2016
  * 
@@ -38,8 +38,10 @@ var taskSourceMaps  = require('gulp-sourcemaps');
 var taskScsslint	= require('gulp-scss-lint');
 
 const DEFAULT_CONFIG_FILENAME = "cms.config.json";
+const DEBUG = true;
 
 class PackmanApp {
+	public applicationRoot: string = path.dirname(require.main.filename);
 	public resourceRootDirectory: string = null;
 	public mainConfigurationFile = "";
 
@@ -53,114 +55,111 @@ class PackmanApp {
 		this.terminal = new Terminal();
 	}
 
-	getResourceTypeFromString(resourceName: string) {
-		var resourceType = ResourceType.Unknown;
-
-		switch (resourceName.toLowerCase()) {
-			case Global.RESOURCE_NAME_STYLESHEET:
-				resourceType = ResourceType.Style
-				break;
-			case Global.RESOURCE_NAME_SCRIPT:
-				resourceType = ResourceType.Script
-				break;
-		}
-		
-		return resourceType;
-	}
-
-	validateConfigValues(configData: any): boolean {
-		return true;
-	}
-
 	useAbsolutePathForPart(part) {
 		return part.absolutePath != undefined && part.absolutePath;
 	}
 
 	/**
-	 * Quick and dirty parsing of command line parameters...
+	 *	Simple method for parsing the first command line parameter.
+	 *	The function is prepared to handle any number of parameters
 	 */
-	parseConfigurationFileParameter() {
-		var parameters = process.argv.slice(2);
-		var resourceRootParam = null;
+	parseConfigurationFileParameter(): string {
+		var commandLineParams = process.argv.slice(2);
+		var paramsNullOrEmpty = StringHelper.isNullOrEmpty(commandLineParams[0]);
+		var containsParameterIndex = commandLineParams.length > 0;
+		var configFileParameter = null;
 		
-		if (parameters.length > 0 && !StringHelper.isNullOrEmpty(parameters[0])) {
-			resourceRootParam = parameters[0];
-			if (!this.fileSystemHelper.fileOrDirectoryExists(resourceRootParam)) {
-				this.terminal.echoPurple("Resource Root diectory \"" + resourceRootParam + "\" does not exist, aborting!");
-				process.exit(1);
-			}
+		if (!paramsNullOrEmpty && containsParameterIndex) {
+			configFileParameter = commandLineParams[0];
 		}
-		
-		return resourceRootParam;
+				
+		return configFileParameter;
 	}
 	
-	getConfigurationFilename() {
-		
-	}
-
 	/**
-	 * Application Entry point
+	 *	Gets the resource configuration filename with a fallbacks
+	 *	in the following order.
+	 *	1. Check if the CL parameter is a valid filename
+	 *	2. Check if the CL is a valid directory and fall back on default filename
+	 *  3. Fall back on the application directory and default filename
+	 *	4. Fail!
+	 *
+	 *	TODO: Clean up
 	 */
-	public execute() {
-		var terminal = this.terminal;
-		var configurationFileName = this.getConfigurationFilename();
-		
-		
-		
+	decideOnConfigurationFilename(): string {
+		var configFilename = path.join(this.applicationRoot, DEFAULT_CONFIG_FILENAME);
 		var configFileParam = this.parseConfigurationFileParameter();
-		this.resourceRootDirectory = configFileParam;
-
-		if (StringHelper.isNullOrEmpty(resourceRootParam)) {
-			this.resourceRootDirectory = path.dirname(require.main.filename);
-			
-			var infoText = new StringBuffer()
-				.append("No root directory provided, using apllication root: ")
-				.append(this.resourceRootDirectory, true); 
-			
-			terminal.echoWarning(infoText.toString())
-		}
+		var haveConfigFileParam = configFileParam != null;
+		var configFileParamIsDirectory = haveConfigFileParam && this.fileSystemHelper.isDirectory(configFileParam);
 		
-		  //"resource.main.config.json";
-
-		this.mainConfigurationFile = path.join(this.resourceRootDirectory, configurationFileName);
-		this.terminal.echoSetting("Configuration filename:", this.mainConfigurationFile);
-
-		if (!this.fileSystemHelper.fileOrDirectoryExists(this.mainConfigurationFile)) {
-			this.terminal.echoScreamingError("Configuration file \"" + this.mainConfigurationFile + "\" not found, aborting!");
+		if (haveConfigFileParam && !this.fileSystemHelper.fileOrDirectoryExists(configFileParam)) {
+			this.terminal.echoScreamingError("Invalid configuration filename: \""
+				+ configFileParam + "\" terminating");
 			process.exit(1);
 		}
+		
+		if (this.fileSystemHelper.fileExists(configFileParam) && !configFileParamIsDirectory) {
+			configFilename = configFileParam;
+			if (DEBUG) this.terminal.echoWarning("Using provided configuration file parameter \""
+				+ configFilename + "\"");
+		}
+		else if (haveConfigFileParam && configFileParamIsDirectory) {
+			configFilename = path.join(configFileParam, DEFAULT_CONFIG_FILENAME);			
+			if (DEBUG) this.terminal.echoInfo("Using path \"" + configFileParam
+				+ "\" with defaut filename \"" + DEFAULT_CONFIG_FILENAME + "\"");
+		}
+		else {
+			this.terminal.echoWarning("No filename or filepath provided, using default \""
+				+ configFilename + "\"");
+		} 
 
-		var configuration = this.parseConfigurationFile(this.mainConfigurationFile);
+		return configFilename;
 	}
 
 	/**
 	 * Read and verify the main configuration file, kick off the build process
 	 */
-	parseConfigurationFile(configurationFileName: string) {
+	parseConfigurationFile(configurationFileName: string): any {
 		var self = this;
 		var terminal = this.terminal;
-		var configurationData: any;
+		var configurationData: any = null;
 
 		// Read the main resource configuration file from disk.
-		configurationData = jsonfile.readFileSync(configurationFileName);
+		terminal.echoInfo("Reading configuration filename \"" + configurationFileName + "\"");
+
+		var jsonData = jsonfile.readFileSync(configurationFileName);
 		
-		if (this.resourceConfiguration.validateConfiguration()) {
-			this.parseResourceSections(configurationData.sections);
+		if (this.resourceConfiguration.validateConfiguration(jsonData)) {
+			configurationData = jsonData;
+			
+			// Set main Resource Path
+			// -----------------------
+			// All paths, (except bundle parts with an "absolutePath" flag set to true")
+			// will be relative to this path.
+			//
+			// The resource path is compiled as follows:
+			// 1. Config file path, either set by command line param or the Application Roo
+			// 2. "root" option at root level in the configuration file.
+			
+			var configurationFilePath = path.dirname(configurationFileName);
+			var rootPathSetInCongigurationFile = configurationData.root;
+			
+			
+			this.resourceRootDirectory = ;
 		}
+		
+		return configurationData;
 	}
-	
-	parseResourceSections(resourceSections: any) {
-		var self = this;
-		resourceSections.forEach(function(section) {
-			var sectionBundles = section.bundles;
-			var resourceType = self.getResourceTypeFromString(section.type);
-			self.terminal.echoStatus("Section type:", section.type);
-			self.parseSectionBundles(self.resourceRootDirectory, sectionBundles, resourceType);
-		});
-	}
-	
+
 	getBundleRootDirectory(bundle: any): string {
+		console.log("GET BUNDLE ROOT DIRECTORY!!!!");
+		
 		var haveBundleRoot = !StringHelper.isNullOrEmpty(bundle.root);
+
+		console.log("haveBundleRoot", haveBundleRoot);
+		console.log("this.resourceRootDirectory", this.resourceRootDirectory);
+		console.log("bundle.root", bundle.root);
+
 		var bundleRootDirectory = haveBundleRoot ? path.join(this.resourceRootDirectory, bundle.root)
 			: this.resourceRootDirectory;
 		
@@ -173,21 +172,52 @@ class PackmanApp {
 		return bundleRootDirectory;
 	}
 
-	getFullBundlePartFilename(bundle: any) : string {
+	/************************************************************
+	 * 
+	 * 
+	 *				   APPLICATION ENTRY POINT
+	 * 
+	 * 
+	 ***********************************************************/
+	public execute() {
 		var terminal = this.terminal;
-		
-		var bundleRoot = this.getBundleRootDirectory(bundle.root);
-		
-		/*
-		terminal.echoStatus("Bundle Root", bundleRoot);
-		terminal.echoStatus("Bundle Name", bundle.name);
-		terminal.echoStatus("Bundle Output Filename", bundleFilename);	
-		*/
-		
-		return "";	
+		this.mainConfigurationFile = this.decideOnConfigurationFilename();
+		var configurationData = this.parseConfigurationFile(this.mainConfigurationFile);
+				
+		if (configurationData != null) {
+			
+			console.log("resourceRootDirectory!!!!!", this.resourceRootDirectory);			
+			
+			this.executeBuild(configurationData.sections);
+		}
+		else {
+			// If we reach this point, the "validateConfiguration" will have provided
+			// information about configuration errors, so simply terminate
+			process.exit(1);
+		}
 	}
 
-	parseSectionBundles(rootDir, bundles, resourceType) {
+	executeBuild(resourceSections: any) {
+		var self = this;
+
+		//TODO: Replace the "forEach" with a "for in""
+		resourceSections.forEach(function(section) {
+			var debugInfo = new Array<string>();
+			var sectionBundles = section.bundles;
+
+			debugInfo.push("Section name: " + section.name);
+			debugInfo.push("Section type: " + section.type);
+			
+			if (DEBUG ) {
+				self.terminal.echoArray("Parsing and compiling section", debugInfo);
+			}
+
+			var resourceType = self.resourceConfiguration.getResourceTypeFromString(section.type);
+			self.compileSectionBundles(self.resourceRootDirectory, sectionBundles, resourceType);
+		});
+	}
+
+	compileSectionBundles(rootDir, bundles, resourceType) {
 		var self = this;
 		var terminal = this.terminal;
 
@@ -236,7 +266,6 @@ class PackmanApp {
 	
 	parseBundleParts(bundleRoot: string, bundleParts: any,
 		filesInBundle: string[], preservedPartsOrder: string[]) {
-
 		console.log("Parse Bundle Parts (bundleRoot)", bundleRoot);
 		
 		var self = this;
@@ -260,11 +289,8 @@ class PackmanApp {
 				} else if (stats.isFile()) {
 					files = [partSource];
 				}
-
-				//* TODO: This should not be needed, ignored files should
-				//* never be added in the first
-				self.filterFiles(files, []);
-
+				
+				this.resourceConfiguration.filterExcludedFiles(files, []);
 				ArrayHelper.arrayMerge(filesInBundle, files);
 			} else {
 				self.terminal.echoScreamingError("\"" + partSource + "\" is missing, terminating...");
@@ -325,12 +351,6 @@ class PackmanApp {
 			.pipe(taskConcat(bundleFilename))
 			.pipe(taskMinify())
 			.pipe(gulp.dest(bundlePath));
-	}
-
-	filterFiles(fileList: string[], ignoreList: string[]) {
-		fileList.forEach(function(file) {
-			//console.log("filterFiles", "EXT: " + path.extname(file) + " : " + file);
-		});
 	}
 }
 

@@ -32,16 +32,9 @@ class Terminal {
 		console.log(chalk.white.bold(prefix), chalk.green(statusText));
 	}
 	
-	
 	public echo(outputText: string) {
 		console.log(chalk.white(outputText));
 	}
-
-/*
-	public richEcho(...dataArray: any[]) {
-		var outputText = dataArray.join(" ");
-		console.log(outputText);
-	}*/
 
 	public echoPurple(outputText: string, sender?: any) {
 		console.log(chalk.white.bgMagenta.bold("%s"), outputText);
@@ -56,7 +49,7 @@ class Terminal {
 	}
 
 	public echoInfo(outputText: string) {
-		console.log(chalk.bold("%s"), outputText);
+		console.log(chalk.bold("%s"), ">> " + outputText);
 	}
 
 	public echoScreamingInfo(outputText: string) {
@@ -127,6 +120,8 @@ class Terminal {
 			lineNum++;
 			console.log("*", boldWhite(data[i]));
 		}
+		
+		console.log(" ");
 	}
 }
 

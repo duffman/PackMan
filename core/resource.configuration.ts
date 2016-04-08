@@ -11,9 +11,10 @@
 var path = require("path");
 var jsonfile = require("jsonfile");
 
-import { Global } from "../global";
+import { Global, ResourceType } from "../global";
 import { FileSystemHelper } from "./filesystem.helper";
 import { Terminal } from "./terminal";
+import { StringHelper } from "../utilities/string.helper";
 import { MiscHelper } from "../utilities/misc.helper";
 
 class ResourceConfiguration {
@@ -24,6 +25,21 @@ class ResourceConfiguration {
 	constructor() {
 		var defaultConfigFilename = this.defaultConfigFilename();
 		this.terminal = new Terminal();
+	}
+		
+	getResourceTypeFromString(resourceName: string) {
+		var resourceType = ResourceType.Unknown;
+
+		switch (resourceName.toLowerCase()) {
+			case Global.RESOURCE_NAME_STYLESHEET:
+				resourceType = ResourceType.Style
+				break;
+			case Global.RESOURCE_NAME_SCRIPT:
+				resourceType = ResourceType.Script
+				break;
+		}
+		
+		return resourceType;
 	}
 		
 	defaultConfigFilename(): string {
@@ -55,67 +71,27 @@ class ResourceConfiguration {
 		*/
 		
 	}
+
+	public filterExcludedFiles(fileList: string[], ignoreList: string[]) {
+		fileList.forEach(function(file) {
+			//console.log("filterFiles", "EXT: " + path.extname(file) + " : " + file);
+		});
+	}
 	
 	/**
 	 * TODO: It´s pretty obvious what needs to be don here...
 	 */
-	public validateConfiguration(filename?: string) {
+	public validateConfiguration(configurationData: any) {
 		return true;
-		/*
-		if (MiscHelper.isNullOrEmpty(filename)) {
-			this.configurationFilename = this.defaultConfigFilename();
-			this.terminal.echoInfo("Using default configuration filename: " +  this.configurationFilename);
-		}
-
-		if (!this.fileSystemHelper.fileExists(this.configurationFilename)) {
-			if (Global.Debug) {
-				this.terminal.echoDebug('Configuration File "' + this.configurationFilename + '" is missing');
-			}
-
-			var exitMessage = `Default configuration file does not exist, bailing out!`;
-			this.terminal.echoScreamingError(exitMessage);
-			process.exit();
-		}
-
-		this.init();
-		*/
+		//if (StringHelper.isNullOrEmpty(configurationData.root))
 	}
 	
-	public init() {
-		if (Global.Debug) {
-			this.terminal.echoDebug("Initializing resource configuration using: " +  this.configurationFilename);
-		}
+	/**
+	 * EXPERIMENTAL DIRECTORY BASED CONFIGURATION BUILDER
+	 */
+	public buildConfigurationFromDirectoryStructure(rootPath: string, outputConfigFilename): boolean {
 		
-		var configJson = jsonfile.readFileSync(this.configurationFilename);
-
-		if (configJson == undefined || configJson.options == undefined) {
-			this.printMissingOptionsMessage();			
-			return;
-		}
-
-		var optionsConfigJson = configJson.options;
-
-		// Adapter assignment, not optimal but a bit too noisy
-		// TODO: Serialize properties directly (Json -> Obj.Property)
-		/*
-		this.rootSettings.rootPath = optionsConfigJson.rootPath;
-		this.rootSettings.followSymLinks = optionsConfigJson.followSymLinks;
-		this.rootSettings.verbose = optionsConfigJson.verbose;
-		this.rootSettings = optionsConfigJson.minify;
-		this.rootSettings = optionsConfigJson.recursive;
-		this.rootSettings = optionsConfigJson.lintFeedback;
-		this.rootSettings = optionsConfigJson.useGitIgnore;
-		this.rootSettings = optionsConfigJson.exclude;
-
-		console.log("rootPath", optionsConfigJson.rootPath);
-		console.log("followSymLinks", optionsConfigJson.followSymLinks);
-		console.log("verbose", optionsConfigJson.verbose);
-		console.log("minify", optionsConfigJson.minify);
-		console.log("recursive", optionsConfigJson.recursive);
-		console.log("lintFeedback", optionsConfigJson.lintFeedback);
-		console.log("useGitIgnore", optionsConfigJson.useGitIgnore);
-		console.log("exclude", optionsConfigJson.exclude);
-		*/
+		return true;
 	}
 }
 
