@@ -1,5 +1,5 @@
 /**
- *	Packman - The Asset Machine
+ *	Packman -  Resource Compiler
  *	@author Patrik Forsberg
  *	@date 2016
  * 
@@ -12,7 +12,7 @@
 
 "use strict";
 
-import { Global, ResourceType } from "./global";
+import { Global, Types } from "./global";
 import { FileSystemHelper } from "./core/filesystem.helper";
 import { ResourceConfiguration } from "./core/resource.configuration";
 import { ResourceProcessor } from "./core/resource.processor";
@@ -26,31 +26,19 @@ var fs          	= require('fs');
 var path        	= require('path') ;
 var jsonfile    	= require('jsonfile');
 
-// Tasks
-var gulp			= require('gulp');
-var taskConcat		= require('gulp-concat');
-var taskReplace		= require('gulp-replace');
-var taskRename		= require('gulp-rename');
-var taskSass		= require('gulp-sass');
-var taskUglify		= require('gulp-uglify');
-var taskMinify		= require('gulp-minify-css');
-var taskSourceMaps  = require('gulp-sourcemaps');
-var taskScsslint	= require('gulp-scss-lint');
-
-const DEFAULT_CONFIG_FILENAME = "cms.config.json";
-const DEBUG = true;
-
 class PackmanApp {
 	public applicationRoot: string = path.dirname(require.main.filename);
 	public resourceRootDirectory: string = null;
 	public mainConfigurationFile = "";
 
 	resourceConfiguration: ResourceConfiguration;
+	resourceProcessor: ResourceProcessor;
 	fileSystemHelper: FileSystemHelper;
 	terminal: Terminal;
 	
 	constructor() {
 		this.resourceConfiguration = new ResourceConfiguration();
+		this.resourceProcessor = new ResourceProcessor();
 		this.fileSystemHelper = new FileSystemHelper();
 		this.terminal = new Terminal();
 	}
@@ -87,7 +75,7 @@ class PackmanApp {
 	 *	TODO: Clean up
 	 */
 	decideOnConfigurationFilename(): string {
-		var configFilename = path.join(this.applicationRoot, DEFAULT_CONFIG_FILENAME);
+		var configFilename = path.join(this.applicationRoot, Global.Settings.defaultConfigFilename);
 		var configFileParam = this.parseConfigurationFileParameter();
 		var haveConfigFileParam = configFileParam != null;
 		var configFileParamIsDirectory = haveConfigFileParam && this.fileSystemHelper.isDirectory(configFileParam);
@@ -100,18 +88,22 @@ class PackmanApp {
 		
 		if (this.fileSystemHelper.fileExists(configFileParam) && !configFileParamIsDirectory) {
 			configFilename = configFileParam;
-			if (DEBUG) this.terminal.echoWarning("Using provided configuration file parameter \""
+			if (Global.Settings.debug) this.terminal.echoWarning("Using provided configuration file parameter \""
 				+ configFilename + "\"");
 		}
 		else if (haveConfigFileParam && configFileParamIsDirectory) {
-			configFilename = path.join(configFileParam, DEFAULT_CONFIG_FILENAME);			
-			if (DEBUG) this.terminal.echoInfo("Using path \"" + configFileParam
-				+ "\" with defaut filename \"" + DEFAULT_CONFIG_FILENAME + "\"");
+			configFilename = path.join(configFileParam, Global.Settings.defaultConfigFilename);			
+			if (Global.Settings.debug) this.terminal.echoInfo("Using path \"" + configFileParam
+				+ "\" with defaut filename \"" + Global.Settings.defaultConfigFilename + "\"");
 		}
-		else {
+		else if (this.fileSystemHelper.fileExists(configFilename)) {
 			this.terminal.echoWarning("No filename or filepath provided, using default \""
 				+ configFilename + "\"");
-		} 
+		}
+		else {
+			this.terminal.echoScreamingError("No configuration file found, I even looked at the default path, try again, bye for now!");
+			process.exit(1);	
+		}
 
 		return configFilename;
 	}
@@ -142,32 +134,23 @@ class PackmanApp {
 			// 2. "root" option at root level in the configuration file.
 			
 			var configurationFilePath = path.dirname(configurationFileName);
-			var rootPathSetInCongigurationFile = configurationData.root;
-			
-			
-			this.resourceRootDirectory = ;
+			var rootPathInCongigurationFile = configurationData.root;
+			this.resourceRootDirectory = path.join(configurationFilePath, rootPathInCongigurationFile);
 		}
 		
 		return configurationData;
 	}
 
 	getBundleRootDirectory(bundle: any): string {
-		console.log("GET BUNDLE ROOT DIRECTORY!!!!");
-		
 		var haveBundleRoot = !StringHelper.isNullOrEmpty(bundle.root);
-
-		console.log("haveBundleRoot", haveBundleRoot);
-		console.log("this.resourceRootDirectory", this.resourceRootDirectory);
-		console.log("bundle.root", bundle.root);
 
 		var bundleRootDirectory = haveBundleRoot ? path.join(this.resourceRootDirectory, bundle.root)
 			: this.resourceRootDirectory;
 		
-		
-		var bp = new Array<string>();
-		bp.push("this.resourceRootDirectory: " + this.resourceRootDirectory);
-		bp.push("bundle.root: " + bundle.root);
-		this.terminal.echoArray("Paths Info", bp);
+		this.terminal.echoArray("Build Paths", [
+			"ResourceRootDirectory: " + this.resourceRootDirectory,
+			"Bundle Root: " + bundle.root,
+		]);
 		
 		return bundleRootDirectory;
 	}
@@ -185,9 +168,6 @@ class PackmanApp {
 		var configurationData = this.parseConfigurationFile(this.mainConfigurationFile);
 				
 		if (configurationData != null) {
-			
-			console.log("resourceRootDirectory!!!!!", this.resourceRootDirectory);			
-			
 			this.executeBuild(configurationData.sections);
 		}
 		else {
@@ -200,15 +180,14 @@ class PackmanApp {
 	executeBuild(resourceSections: any) {
 		var self = this;
 
-		//TODO: Replace the "forEach" with a "for in""
 		resourceSections.forEach(function(section) {
 			var debugInfo = new Array<string>();
 			var sectionBundles = section.bundles;
-
-			debugInfo.push("Section name: " + section.name);
-			debugInfo.push("Section type: " + section.type);
 			
-			if (DEBUG ) {
+			if (Global.Settings.debug) {
+				debugInfo.push("Section name: " + section.name);
+				debugInfo.push("Section type: " + section.type);
+
 				self.terminal.echoArray("Parsing and compiling section", debugInfo);
 			}
 
@@ -220,53 +199,34 @@ class PackmanApp {
 	compileSectionBundles(rootDir, bundles, resourceType) {
 		var self = this;
 		var terminal = this.terminal;
-
 		var bundleCount = bundles.length;
-		var bundleCountSuffix = bundleCount != 1 ? "bundles" : "bundle";
-		
-		terminal.echo(bundleCount + " " + bundleCountSuffix + " found in section");
 
 		for (var i = 0; i < bundleCount; i++) {
 			var bundle = bundles[i];
 			var bundleRoot = this.getBundleRootDirectory(bundle);
-			
-			terminal.echoInfo("Parsing bundle, using root: " + bundleRoot);
-			
 			var bundlePath = bundle.bundlePath;
 			var bundleFilename = bundle.bundleFilename;
-
 			var filesInBundle = [];
 			var preservedPartsOrder = [];
-
-			// Extracts filenames... 
+			
+			terminal.echoInfo("Parsing bundle, using root: " + bundleRoot);
 			self.parseBundleParts(bundleRoot, bundle.parts, filesInBundle, preservedPartsOrder);
 
-			/**
-			 *	2016-04-07 
-			 *	FIX: Added an extra stage in the bundling process to enable bundling of
-			 *	assets generated in the same scope..
-			 * 
-			 *	TODO: Add cleanup functionality to remove compiled resources when
-			 *	the final bundling is done...
-			 *
-			 */
 			switch (resourceType) {
-				case ResourceType.Script:
-					self.compileScripts(bundleFilename, bundlePath, filesInBundle);
-					//self.bundleScripts(bundleFilename, bundlePath, filesInBundle);
+				case Types.ResourceType.Script:
+					this.resourceProcessor.compileScripts(bundlePath, filesInBundle);
 					break;
 
-				case ResourceType.Style:
-					//self.bundleStyles(bundleFilename, bundlePath, filesInBundle);
+				case Types.ResourceType.Style:
+					this.resourceProcessor.compileStyles(bundlePath, filesInBundle);
 					break;
-				
 			}
 		}
 	}
 	
 	parseBundleParts(bundleRoot: string, bundleParts: any,
 		filesInBundle: string[], preservedPartsOrder: string[]) {
-		console.log("Parse Bundle Parts (bundleRoot)", bundleRoot);
+		this.terminal.echoGreenInfo("Parsing Bundle Parts:" +  bundleRoot);
 		
 		var self = this;
 		bundleParts.forEach(function(part) {
@@ -281,7 +241,6 @@ class PackmanApp {
 			if (fs.existsSync(partSource)) {
 				preservedPartsOrder.push(partSource);
 				var stats = fs.lstatSync(partSource);
-				
 				var files = [];
 				
 				if (stats.isDirectory()) {
@@ -290,67 +249,13 @@ class PackmanApp {
 					files = [partSource];
 				}
 				
-				this.resourceConfiguration.filterExcludedFiles(files, []);
+				self.resourceConfiguration.filterExcludedFiles(files, []);
 				ArrayHelper.arrayMerge(filesInBundle, files);
 			} else {
 				self.terminal.echoScreamingError("\"" + partSource + "\" is missing, terminating...");
 				process.exit(1);
 			}
 		});		
-	}
-	
-	/************************************************************
-	 * 
-	 * 
-	 *				   PROCESS AND BUILD ASSETS
-	 * 
-	 * 
-	 ***********************************************************/
-	compileScriptBundle(targetFilename: string, bundleOutputPath: string, filesInBundle: string[]) {
-		
-	}
-
-	/**
-	 * 
-	 */
-	compileScripts(bundleFilename, bundlePath, filesInBundle) {
-	
-	}
-
-	/**
-	 * 
-	 */
-	bundleScripts(bundleFilename, bundlePath, filesInBundle) {
-		this.terminal.echoStatus("Compiling Scripts bundle to:", bundleFilename);
-		gulp.src(filesInBundle)
-			.pipe(taskSourceMaps.init())
-			.pipe(taskConcat(bundleFilename))
-			//.pipe(taskUglify())
-			.pipe(taskSourceMaps.write())
-			.pipe(gulp.dest(bundlePath));
-			
-		/*
-	.pipe(sourcemaps.init())
-	.pipe(taskSass().on('error', this.processorTaskError))
-	.pipe(sourcemaps.write())
-		*/
-	}
-	
-	/* Source map generation
-	.pipe(sourcemaps.init())
-	.pipe(taskSass().on('error', this.processorTaskError))
-	.pipe(sourcemaps.write())
-	*/
-
-	bundleStyles(bundleFilename, bundlePath, filesInBundle) {
-		this.terminal.echoStatus("Compiling Styles bundle to:", bundleFilename);
-		gulp.src(filesInBundle)
-			.pipe(taskSass().on('error', function(error) {
-				console.log("SASS ERROR", error.message);
-			}))
-			.pipe(taskConcat(bundleFilename))
-			.pipe(taskMinify())
-			.pipe(gulp.dest(bundlePath));
 	}
 }
 

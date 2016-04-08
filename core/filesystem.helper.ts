@@ -1,5 +1,5 @@
 /**
- *	Packman - The Asset Pipe Machine
+ *	Packman -  Resource Compiler
  *	@author Patrik Forsberg
  *	@date 2016
  */

@@ -11,7 +11,7 @@
 var path = require("path");
 var jsonfile = require("jsonfile");
 
-import { Global, ResourceType } from "../global";
+import { Global, Constants, Types } from "../global";
 import { FileSystemHelper } from "./filesystem.helper";
 import { Terminal } from "./terminal";
 import { StringHelper } from "../utilities/string.helper";
@@ -23,34 +23,24 @@ class ResourceConfiguration {
 	terminal: Terminal;
 
 	constructor() {
-		var defaultConfigFilename = this.defaultConfigFilename();
 		this.terminal = new Terminal();
 	}
 		
 	getResourceTypeFromString(resourceName: string) {
-		var resourceType = ResourceType.Unknown;
+		var resourceType = Types.ResourceType.Unknown;
 
 		switch (resourceName.toLowerCase()) {
-			case Global.RESOURCE_NAME_STYLESHEET:
-				resourceType = ResourceType.Style
+			case Constants.RESOURCE_NAME_STYLESHEET:
+				resourceType = Types.ResourceType.Style
 				break;
-			case Global.RESOURCE_NAME_SCRIPT:
-				resourceType = ResourceType.Script
+			case Constants.RESOURCE_NAME_SCRIPT:
+				resourceType = Types.ResourceType.Script
 				break;
 		}
 		
 		return resourceType;
 	}
-		
-	defaultConfigFilename(): string {
-		var configurationFilename = path.join(__dirname, Global.CONFIG_FILE);
-		return configurationFilename;
-	}
-
-	printMissingOptionsMessage() {
-		this.terminal.echoScreamingError("Configuration file Error, Options section missing!");
-	}
-	
+			
 	public parseExcludeList() {
 		/*
 		var extensionsRulesMask = "*.js, , *.html, *.css, *.exe";
@@ -73,9 +63,12 @@ class ResourceConfiguration {
 	}
 
 	public filterExcludedFiles(fileList: string[], ignoreList: string[]) {
-		fileList.forEach(function(file) {
-			//console.log("filterFiles", "EXT: " + path.extname(file) + " : " + file);
-		});
+		var haveFileList: boolean = !MiscHelper.isNullOrEmpty(fileList);
+		var haveIgnoreList = !MiscHelper.isNullOrEmpty(ignoreList);
+		
+		if (!haveFileList || !haveIgnoreList) {
+			return;
+		}
 	}
 	
 	/**

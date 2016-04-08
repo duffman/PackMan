@@ -1,39 +1,48 @@
 /**
- *	Packman - The Asset Machine
+ *	Packman - Resource Compiler
  *	@author Patrik Forsberg
- *	@date 2016-03-26
+ *	@date 2016
  */
 
-enum WalkOperationEvent {
-	Names,
-	Directory,
-	Directories,
-	File,
-	Files,
-	End,
-	NodeError,
-	DirectoryError,
-	Errors
-}
+module Constants {
+	const APP_CONFIG_FILE			= "packman-config.json";
+	const Debug						= true;
 
-enum ResourceType {
-	Unknown,
-	Style,
-	Script,
-}
-
-class Global {
-	static CONFIG_FILE: string		= "packman-config.json";
-
-	static Debug					= true;
-
-	static RESOURCE_NAME_STYLESHEET	= "style";
-	static RESOURCE_NAME_SCRIPT		= "script";
+	export const RESOURCE_NAME_STYLESHEET	= "style";
+	export const RESOURCE_NAME_SCRIPT		= "script";
 
 	// Resource Machine Task Names
-	static TASK_MAKE: string		= "make";
-	static TASK_CLEAN: string		= "clean";
-	static TASK_REPLACE: string		= "replace";
+	const TASK_MAKE: string			= "make";
+	const TASK_CLEAN: string		= "clean";
+	const TASK_REPLACE: string		= "replace";
 }
- 
-export { Global, ResourceType }
+
+module Types {
+	export enum ResourceType {
+		Unknown,
+		Style,
+		Script,
+	}
+		
+	export enum WalkOperationEvent {
+		Names,
+		Directory,
+		Directories,
+		File,
+		Files,
+		End,
+		NodeError,
+		DirectoryError,
+		Errors
+	}
+}
+
+module Global {	
+	export module Settings {
+		export var defaultConfigFilename = "resources.config.json";
+		export var debug = true;
+		export var terminateOnError: boolean = false;		
+	}
+}
+
+export { Global, Types, Constants }

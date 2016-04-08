@@ -6,7 +6,7 @@
  *	This class is a convinient class really, it´s not
  *	made for performance reasons rather an attempt to
  *	prettify the uggliest operation there is in
- *	software programming, string concatenations.
+ *	software programming, that is string concatenations.
  */
 
 class StringBuffer  {

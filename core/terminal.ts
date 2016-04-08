@@ -52,6 +52,18 @@ class Terminal {
 		console.log(chalk.bold("%s"), ">> " + outputText);
 	}
 
+	public echoGreenInfo(outputText: string) {
+		console.log(chalk.green.bold("%s"), ">> " + outputText);
+	}
+
+	public echoPrefixedCyan(outputText: string, filename: string) {
+		console.log(chalk.cyan.bold(outputText), chalk.cyan.bold(filename));
+	}
+
+	public echoPrefixedMagenta(outputText: string, filename: string) {
+		console.log(chalk.magenta.bold(outputText), chalk.cyan.bold(filename));
+	}
+
 	public echoScreamingInfo(outputText: string) {
 		console.log(chalk.black.bgWhite.bold("%s"), outputText);
 	}
@@ -99,8 +111,15 @@ class Terminal {
 		return result;
 	}
 
-	public echoArray(title: string, data: string[]) {
+	public echoArray(title: string, data: string[], error?: boolean) {
+		if (data === undefined) {
+			data = new Array<string>();
+			data.push("No data");
+		}
+		
+		var boldRed = chalk.bold.red;
 		var boldWhite = chalk.bold.white;
+		var textColor = error ? boldRed : boldWhite;
 		var lineNum = 0;
 
 		var longestLine = this.getLongestLine(data);
@@ -113,12 +132,12 @@ class Terminal {
 		longestLine = longestLine + 3;
 
 		console.log(" ");
-		console.log(boldWhite(title));
-		console.log(boldWhite(this.repeatChar("-", longestLine)));
-
+		console.log(textColor(title));
+		console.log(textColor(this.repeatChar("-", longestLine)));
+		
 		for (var i = 0; i < data.length; i++) {
 			lineNum++;
-			console.log("*", boldWhite(data[i]));
+			console.log("*", textColor(data[i]));
 		}
 		
 		console.log(" ");
