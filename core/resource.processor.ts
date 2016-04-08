@@ -50,7 +50,6 @@ class ResourceProcessor {
 	public compileScripts(outputPath: string, filesInBundle: string[]) {
 		this.terminal.echoArray("Compiling Scripts", filesInBundle);
 		this.terminal.echoInfo("Output Path Path \"" + outputPath + "\"");
-
 		
 		for (var i = 0; i < filesInBundle.length; i++) {
 			var filename = filesInBundle[i];
@@ -102,7 +101,6 @@ class ResourceProcessor {
 			
 			this.terminal.echoPrefixedMagenta("Compiling StyleSheet: ", filename);
 			var compilationResult = this.compileStylesTask(outputPath, filesInBundle);
-			console.log("Compilation result", compilationResult);
 		}
 	}		 
 

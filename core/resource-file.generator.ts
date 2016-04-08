@@ -11,7 +11,6 @@
 var walker      	= require("walk");
 var fs          	= require("fs");
 var path        	= require("path");
-var jsonfile    	= require("jsonfile");
 
 import { Global } from "../global";
 import { Terminal } from "./terminal";

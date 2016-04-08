@@ -12,7 +12,6 @@ var walker		= require("walk");
 var fs			= require("fs");
 var walk		= require("fs-walk");
 var path		= require("path") ;
-var jsonfile	= require("jsonfile");
 
 import { Terminal } from "./terminal";
 

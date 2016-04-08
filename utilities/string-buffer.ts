@@ -1,12 +1,14 @@
 /**
- *	Simple StringBufer implementation
+ *	Simple "StringBufer"" implementation
  *	@author Patrik Forsberg <patfor@gmail.com>
  *	@2016-04-07
  * 
- *	This class is a convinient class really, it´s not
- *	made for performance reasons rather an attempt to
- *	prettify the uggliest operation there is in
- *	software programming, that is string concatenations.
+ *	This class is a convenience class really, it´s not
+ *	made for performance reasons since pretty much all
+ *	JavaScript VM´s got you covered there.
+ *	This is an attempt to prettify the uggliest
+ *	operation there is in software programming,
+ *	and that is, string concatenations.
  */
 
 class StringBuffer  {

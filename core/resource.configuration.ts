@@ -9,7 +9,6 @@
 "use strict";
 
 var path = require("path");
-var jsonfile = require("jsonfile");
 
 import { Global, Constants, Types } from "../global";
 import { FileSystemHelper } from "./filesystem.helper";
@@ -25,7 +24,7 @@ class ResourceConfiguration {
 	constructor() {
 		this.terminal = new Terminal();
 	}
-		
+	
 	getResourceTypeFromString(resourceName: string) {
 		var resourceType = Types.ResourceType.Unknown;
 
@@ -79,12 +78,8 @@ class ResourceConfiguration {
 		//if (StringHelper.isNullOrEmpty(configurationData.root))
 	}
 	
-	/**
-	 * EXPERIMENTAL DIRECTORY BASED CONFIGURATION BUILDER
-	 */
-	public buildConfigurationFromDirectoryStructure(rootPath: string, outputConfigFilename): boolean {
-		
-		return true;
+	useAbsolutePathForPart(part) {
+		return part.absolutePath != undefined && part.absolutePath;
 	}
 }
 

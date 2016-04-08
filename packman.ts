@@ -18,10 +18,9 @@ import { ResourceConfiguration } from "./core/resource.configuration";
 import { ResourceProcessor } from "./core/resource.processor";
 import { Terminal } from "./core/terminal";
 import { StringBuffer } from "./utilities/string-buffer"
+
 var StringHelper	= require('./utilities/string.helper').StringHelper;
 var ArrayHelper		= require('./utilities/array.helper').ArrayHelper;
-
-var walker      	= require('walk');
 var fs          	= require('fs');
 var path        	= require('path') ;
 var jsonfile    	= require('jsonfile');
@@ -41,10 +40,6 @@ class PackmanApp {
 		this.resourceProcessor = new ResourceProcessor();
 		this.fileSystemHelper = new FileSystemHelper();
 		this.terminal = new Terminal();
-	}
-
-	useAbsolutePathForPart(part) {
-		return part.absolutePath != undefined && part.absolutePath;
 	}
 
 	/**
@@ -119,8 +114,14 @@ class PackmanApp {
 		// Read the main resource configuration file from disk.
 		terminal.echoInfo("Reading configuration filename \"" + configurationFileName + "\"");
 
-		var jsonData = jsonfile.readFileSync(configurationFileName);
-		
+		try {
+			var jsonData = jsonfile.readFileSync(configurationFileName, { throws: true });
+		}
+		catch (exception) {
+			terminal.echoScreamingError("Error parsing configuration file, " + exception.toString());
+			process.exit(1);
+		}	
+			
 		if (this.resourceConfiguration.validateConfiguration(jsonData)) {
 			configurationData = jsonData;
 			
@@ -204,8 +205,9 @@ class PackmanApp {
 		for (var i = 0; i < bundleCount; i++) {
 			var bundle = bundles[i];
 			var bundleRoot = this.getBundleRootDirectory(bundle);
-			var bundlePath = bundle.bundlePath;
+			var bundlePath = path.join(this.resourceRootDirectory, bundle.bundlePath);
 			var bundleFilename = bundle.bundleFilename;
+			var bundleDestFile = path.join(bundlePath, bundleFilename);
 			var filesInBundle = [];
 			var preservedPartsOrder = [];
 			
@@ -214,7 +216,7 @@ class PackmanApp {
 
 			switch (resourceType) {
 				case Types.ResourceType.Script:
-					this.resourceProcessor.compileScripts(bundlePath, filesInBundle);
+					this.processScripts(bundleRoot, bundle.parts, filesInBundle, bundleDestFile);
 					break;
 
 				case Types.ResourceType.Style:
@@ -224,9 +226,24 @@ class PackmanApp {
 		}
 	}
 	
+	processScripts(bundlePath: string, bundleParts: string[], filesInBundle: string[], bundleDestFile: string) {
+		this.resourceProcessor.compileScripts(bundlePath, filesInBundle);
+
+//		this.resourceProcessor.bundleScripts()
+
+		this.terminal.echoScreamingError("Compiling is done, time to bundle..." +  bundleDestFile);
+		
+		//this.resourceProcessor.bundleScripts()
+		
+	}
+	
+	useAbsolutePathForPart(part) {
+		return part.absolutePath != undefined && part.absolutePath;
+	}
+	
 	parseBundleParts(bundleRoot: string, bundleParts: any,
 		filesInBundle: string[], preservedPartsOrder: string[]) {
-		this.terminal.echoGreenInfo("Parsing Bundle Parts:" +  bundleRoot);
+		this.terminal.echoInfo("Parsing Bundle Parts:" +  bundleRoot);
 		
 		var self = this;
 		bundleParts.forEach(function(part) {
@@ -244,6 +261,7 @@ class PackmanApp {
 				var files = [];
 				
 				if (stats.isDirectory()) {
+					self.terminal.echoInfo("Listing Directory: " + partSource);
 					files = self.fileSystemHelper.getFilesInDirectory(partSource);
 				} else if (stats.isFile()) {
 					files = [partSource];
