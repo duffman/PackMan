@@ -205,7 +205,7 @@ class PackmanApp {
 
 		for (var i = 0; i < bundleCount; i++) {
 			var bundle = bundles[i];
-			var bundleRoot = this.getBundleRootDirectory(bundle); // NOT USED FOR BUNDLING
+			var bundleRoot = this.getBundleRootDirectory(bundle); // NOT USED FOR BUNDLING OUTPUT
 			var destPath = path.join(this.resourceRootDirectory, bundle.bundlePath);
 			var bundleFilename = bundle.bundleFilename;
 			var filesInBundle = [];
