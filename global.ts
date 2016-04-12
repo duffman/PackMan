@@ -41,7 +41,8 @@ module Global {
 	export module Settings {
 		export var defaultConfigFilename = "resources.config.json";
 		export var debug = true;
-		export var terminateOnError: boolean = false;		
+		export var terminateOnError: boolean = false;
+		export var allowMissingFiles: boolean = true;
 	}
 }
 

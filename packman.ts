@@ -267,8 +267,11 @@ class PackmanApp {
 				self.resourceConfiguration.filterExcludedFiles(files, []);
 				ArrayHelper.arrayMerge(filesInBundle, files);
 			} else {
-				self.terminal.echoScreamingError("\"" + partSource + "\" is missing, terminating...");
-				if (Global.Settings.terminateOnError) process.exit(1);
+				self.terminal.echoScreamingError("\"" + partSource + "\" is missing");
+				if (Global.Settings.terminateOnError && Global.Settings.allowMissingFiles == false) {
+					self.terminal.echoScreamingError("Terminating...");
+					process.exit(1);
+				}
 			}
 		});		
 	}
