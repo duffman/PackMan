@@ -71,7 +71,7 @@ class ResourceConfiguration {
 	}
 	
 	/**
-	 * TODO: It´s pretty obvious what needs to be don here...
+	 * TODO: It´s pretty obvious what needs to be done here...
 	 */
 	public validateConfiguration(configurationData: any) {
 		return true;

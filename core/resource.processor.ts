@@ -50,6 +50,9 @@ class ResourceProcessor {
 	public compileScriptBundle(destPath: string, bundleFilename: string,
 		filesInBundle: string[], onCompileDone) {
 
+		this.terminal.echoArray("Compiling Scripts", filesInBundle);
+		this.terminal.echoInfo("Output Path Path \"" + destPath + "\"");
+
 		var stream = gulp.src(filesInBundle)
 			.pipe(taskUglify())
 			.pipe(taskConcat(bundleFilename))
@@ -71,7 +74,7 @@ class ResourceProcessor {
 	public compileStyles(destPath: string, bundleFilename: string,
 		filesInBundle: string[], onCompileDone) {
 		
-		this.terminal.echoArray("StyleSheets", filesInBundle);
+		this.terminal.echoArray("Compiling StyleSheets", filesInBundle);
 		this.terminal.echoInfo("Output Path Path \"" + destPath + "\"");
 
 		var stream = gulp.src(filesInBundle)

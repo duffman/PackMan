@@ -24,6 +24,7 @@ var ArrayHelper		= require('./utilities/array.helper').ArrayHelper;
 var fs          	= require('fs');
 var path        	= require('path') ;
 var jsonfile    	= require('jsonfile');
+var rx				= require('rx');
 
 class PackmanApp {
 	public applicationRoot: string = path.dirname(require.main.filename);
@@ -216,15 +217,16 @@ class PackmanApp {
 			switch (resourceType) {
 				case Types.ResourceType.Script:
 					this.resourceProcessor.compileScriptBundle(destPath, bundleFilename, filesInBundle, function() {
-						console.log("DONE!!");
+						console.log("Script Compile Done");
 					});
 					break;
 
 				case Types.ResourceType.Style:
-					this.resourceProcessor.compileStyles(destPath, filesInBundle);
+					this.resourceProcessor.compileStyles(destPath, bundleFilename, filesInBundle, function() {
+						console.log("Style Compile Done");
+					});
 					break;
 			}
-			break;
 		}
 	}
 	

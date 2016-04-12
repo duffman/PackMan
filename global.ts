@@ -5,11 +5,11 @@
  */
 
 module Constants {
-	const APP_CONFIG_FILE			= "packman-config.json";
-	const Debug						= true;
-
 	export const RESOURCE_NAME_STYLESHEET	= "style";
 	export const RESOURCE_NAME_SCRIPT		= "script";
+
+	const APP_CONFIG_FILE			= "packman-config.json";
+	const Debug						= true;
 
 	// Resource Machine Task Names
 	const TASK_MAKE: string			= "make";
