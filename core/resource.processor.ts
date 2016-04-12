@@ -68,17 +68,24 @@ class ResourceProcessor {
 	 * 
 	 * 
 	 ***********************************************************/
-	public compileStyles(outputPath: string, destFilename: string, filesInBundle: string[]) {
+	public compileStyles(destPath: string, bundleFilename: string,
+		filesInBundle: string[], onCompileDone) {
+		
 		this.terminal.echoArray("StyleSheets", filesInBundle);
-		this.terminal.echoInfo("Output Path Path \"" + outputPath + "\"");
+		this.terminal.echoInfo("Output Path Path \"" + destPath + "\"");
 
 		var stream = gulp.src(filesInBundle)
 			.pipe(taskSass().on('error', function(error) {
 				console.log("SASS Compilation error", error.message);
 			}))
 			.pipe(taskMinify())
-			.pipe(taskConcat(destFilename))
+			.pipe(taskConcat(bundleFilename))
 			.pipe(gulp.dest(destPath));
+			
+		stream.on('end', function() {
+			onCompileDone();
+			console.log("STREAN END");
+		});
 	}
 }
 
