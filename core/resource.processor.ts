@@ -59,21 +59,8 @@ class ResourceProcessor {
 			onCompileDone();
 			console.log("STREAN END");
 		});
-	
 	}
 
-	/*/.pipe(taskUglify())
-	public bundleScripts(bundleFilename, bundlePath, filesInBundle) {
-		this.terminal.echoStatus("Creating Script Bundle:", bundleFilename);
-		gulp.src(filesInBundle)
-			.pipe(taskSourceMaps.init())
-			.pipe(taskConcat(bundleFilename))
-			.pipe(taskSourceMaps.write())
-			.pipe(gulp.dest(bundlePath));
-
-
-	}
-	*/
 	/************************************************************
 	 * 
 	 * 
@@ -81,29 +68,16 @@ class ResourceProcessor {
 	 * 
 	 * 
 	 ***********************************************************/
-	public compileStyles(outputPath: string, filesInBundle: string[]) {
+	public compileStyles(outputPath: string, destFilename: string, filesInBundle: string[]) {
 		this.terminal.echoArray("StyleSheets", filesInBundle);
 		this.terminal.echoInfo("Output Path Path \"" + outputPath + "\"");
-		
-		for (var i = 0; i < filesInBundle.length; i++) {
-			var filename = filesInBundle[i];
-			if (!this.fileSystemHelper.fileExists(filename)) {
-				this.terminal.echoScreamingError("StyleSheet \""
-					+ this.fileSystemHelper.extractFilename(filename) + "\" not found!");
-				if (Global.Settings.terminateOnError) process.exit(1);
-			}
-			
-			this.terminal.echoPrefixedMagenta("Compiling StyleSheet: ", filename);
-			var compilationResult = this.compileStylesTask(outputPath, filesInBundle);
-		}
-	}		 
 
-	public compileStylesTask(destPath: string, filesInBundle: string[]) {
-		return gulp.src(filesInBundle)
+		var stream = gulp.src(filesInBundle)
 			.pipe(taskSass().on('error', function(error) {
 				console.log("SASS Compilation error", error.message);
 			}))
 			.pipe(taskMinify())
+			.pipe(taskConcat(destFilename))
 			.pipe(gulp.dest(destPath));
 	}
 }

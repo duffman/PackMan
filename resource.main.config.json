@@ -1,6 +1,6 @@
 {
 	"verbose": true,
-	"root": "arne-anka/bullen",
+	"root": "../resources",
 	"followSymLinks": false,
 	"exclude": [
 		"node_modules"

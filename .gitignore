@@ -31,7 +31,6 @@ junk
 
 # Dependency directory
 node_modules
-assets
 # Optional npm cache directory
 .npm
 
