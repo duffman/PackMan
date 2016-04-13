@@ -13,6 +13,7 @@
     "node_modules",
     "typings/main",
 	"assets",
+	"resources",
     "typings/main.d.ts"
   ]
 }
