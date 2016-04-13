@@ -24,7 +24,6 @@ var ArrayHelper		= require('./utilities/array.helper').ArrayHelper;
 var fs          	= require('fs');
 var path        	= require('path') ;
 var jsonfile    	= require('jsonfile');
-var rx				= require('rx');
 
 class PackmanApp {
 	public applicationRoot: string = path.dirname(require.main.filename);
