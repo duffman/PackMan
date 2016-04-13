@@ -8,9 +8,7 @@
 
 "use strict";
 
-var walker		= require("walk");
 var fs			= require("fs");
-var walk		= require("fs-walk");
 var path		= require("path") ;
 
 import { Terminal } from "./terminal";

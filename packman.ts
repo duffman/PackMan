@@ -24,7 +24,6 @@ var ArrayHelper		= require('./utilities/array.helper').ArrayHelper;
 var fs          	= require('fs');
 var path        	= require('path') ;
 var jsonfile    	= require('jsonfile');
-var rx				= require('rx');
 
 class PackmanApp {
 	public applicationRoot: string = path.dirname(require.main.filename);
@@ -203,7 +202,12 @@ class PackmanApp {
 		var terminal = this.terminal;
 		var bundleCount = bundles.length;
 
+		var bundle = bundles.pop();
+			
+		this.compileSingleBundle();
+			
 		for (var i = 0; i < bundleCount; i++) {
+			/*
 			var bundle = bundles[i];
 			var bundleRoot = this.getBundleRootDirectory(bundle); // NOT USED FOR BUNDLING OUTPUT
 			var destPath = path.join(this.resourceRootDirectory, bundle.bundlePath);
@@ -227,6 +231,32 @@ class PackmanApp {
 					});
 					break;
 			}
+			*/
+		}
+	}
+	
+	compileSingleBundle(bundle: any) {
+		var bundleRoot = this.getBundleRootDirectory(bundle); // NOT USED FOR BUNDLING OUTPUT
+		var destPath = path.join(this.resourceRootDirectory, bundle.bundlePath);
+		var bundleFilename = bundle.bundleFilename;
+		var filesInBundle = [];
+		var preservedPartsOrder = [];
+		
+		this.terminal.echoInfo("Parsing bundle, using root: " + bundleRoot);
+		self.parseBundleParts(bundleRoot, bundle.parts, filesInBundle, preservedPartsOrder);
+
+		switch (resourceType) {
+			case Types.ResourceType.Script:
+				this.resourceProcessor.compileScriptBundle(destPath, bundleFilename, filesInBundle, function() {
+					console.log("Script Compile Done");
+				});
+				break;
+
+			case Types.ResourceType.Style:
+				this.resourceProcessor.compileStyles(destPath, bundleFilename, filesInBundle, function() {
+					console.log("Style Compile Done");
+				});
+				break;
 		}
 	}
 	
