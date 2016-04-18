@@ -32,6 +32,7 @@
     "gulp-scss-lint": "^0.3.9",
     "gulp-sourcemaps": "^1.6.0",
     "jsonfile": "^2.2.3",
+    "ts-promise": "^0.3.0",
     "tsc": "^1.20150623.0",
     "typejector": "^0.3.1"
   }

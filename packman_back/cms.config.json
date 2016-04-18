@@ -1,0 +1,35 @@
+{
+	"verbose": true,
+	"root": "assets",
+	"followSymLinks": false,
+	"exclude": [
+		"node_modules"
+	],
+	"options": {
+		"minify": true,
+		"recursive": true,
+		"lintFeedback": false
+	},
+	"sections": [
+		{
+			"type": "script",
+			"options": {
+				"lintFeedback": true,
+				"uglify": true
+			},
+			"bundles": [
+				{
+					"name": "jQuery.PrePack",
+					"root": "",
+					"bundlePath": "compiled",
+					"bundleFilename": "base-prepack_jquery.js",
+					"options": {},
+					"parts": [
+						{ "src": "test1.js" },
+                        { "src": "test2.js" }
+                    ]
+				}
+  	 		]
+		}
+	]
+}

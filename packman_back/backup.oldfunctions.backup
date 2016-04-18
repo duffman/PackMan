@@ -1,0 +1,33 @@
+	/**
+	 *	Simple method for parsing the first command line parameter.
+	 *	The function is prepared to handle any number of parameters
+	 */
+	parseConfigurationFileParameter(): string {
+		var commandLineParams = process.argv.slice(2);
+		var paramsNullOrEmpty = StringHelper.isNullOrEmpty(commandLineParams[0]);
+		var containsParameterIndex = commandLineParams.length > 0;
+		var configFileParameter = null;
+		
+		if (!paramsNullOrEmpty && containsParameterIndex) {
+			configFileParameter = commandLineParams[0];
+		}
+				
+		return configFileParameter;
+	}
+
+	public executeMaster() {
+		var terminal = this.terminal;
+		var commandLineParam = this.parseConfigurationFileParameter();
+		var masterConfigFilename = Global.Settings.masterConfigFilename;
+
+		this.masterConfigurationFileName = this.configurationHandler.decideOnConfigurationFilename(masterConfigFilename);
+		terminal.echoPrefixedCyan("Using master configuration", this.masterConfigurationFileName);
+		this.masterConfigurationProcessor.parseConfiguration(this.masterConfigurationFileName);
+	
+		if (commandLineParam != null) {
+			var sourceFilename = this.masterConfigurationProcessor.getSourceForName(commandLineParam);
+			this.executeSingleBuild(sourceFilename);
+		} else {
+			this.executeAllBuilds();
+		}
+	}

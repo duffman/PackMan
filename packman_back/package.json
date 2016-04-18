@@ -1,0 +1,49 @@
+{
+  "name": "packman-resource-compiler",
+  "version": "5.11.5",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": " \"tsc gulpfile.js\" && gulp",
+    "lan": "echo \"Error: no test specified\" && exit 1",
+    "packman-web": "node packman.js ../web/cms.config.json",
+    "packman-bingo": "node packman.js ../bingo/cms.config.json",
+    "packman-casino": "node packman.js ../casino/cms.config.json",
+    "packman-chat": "node packman.js ../chat/cms.config.json",
+    "packman-customerservice": "node packman.js ../customerservice/cms.config.json",
+    "packman-games": "node packman.js ../games/cms.config.json",
+    "packman-horseracing": "node packman.js ../horseracing/cms.config.json",
+    "packman-livecasino": "node packman.js ../livecasino/cms.config.json",
+    "packman-myaccount": "node packman.js ../myaccount/cms.config.json",
+    "packman-scratch": "node packman.js ../scratch/cms.config.json",
+    "packman-sportsbook": "node packman.js ../sportsbook/cms.config.json",
+    "packman-sportsbooklive": "node packman.js ../sportsbooklive/cms.config.json",
+    "packman-startpage": "node packman.js ../startpage/cms.config.json",
+    "packman-texaspoker": "node packman.js ../texaspoker/cms.config.json",
+    "packman-turkishpoker": "node packman.js ../turkishpoker/cms.config.json"
+  },
+  "author": "Patrik Forsberg",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cssnano": "^2.1.1",
+    "gulp-debug": "^2.1.2",
+    "gulp-insert": "^0.5.0",
+    "gulp-sass": "^2.2.0",
+    "gulp-typescript": "^2.12.1",
+    "gulp-uglify": "^1.5.3",
+    "typings": "^0.7.9"
+  },
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "command-line-args": "^2.1.6",
+    "gulp-concat": "^2.6.0",
+    "gulp-csslint": "^0.3.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-scss-lint": "^0.3.9",
+    "gulp-sourcemaps": "^1.6.0",
+    "jsonfile": "^2.2.3",
+    "tsc": "^1.20150623.0",
+    "typejector": "^0.3.1"
+  }
+}
